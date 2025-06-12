@@ -1,43 +1,7 @@
-Step 1: DataExtraction.py
+This work focuses on multivariate time series classification using deep learning at Jefferson Lab, Virginia.
 
-The purpose of this step is to extract raw data using rfwtools (we did not apply any of the preprocessing steps available in rfwtools). The following are changes that need to be made:
+The process begins with extracting raw data from the lab’s data server. From each superconducting cavity, we select 4 specific signals out of 17 available. Signals from all 8 cavities within a cryomodule are then combined for analysis. The data undergoes several preprocessing steps, including downsampling, train-validation-test splitting, and channel-wise normalization.
 
-line 22: directory of the label file
+Following preprocessing, we train a deep learning model based on a hybrid LSTM-CNN architecture. The model is trained on the training set and validated using the validation set, with training stopping automatically when the validation loss reaches its minimum. After training, we evaluate the model on the test set to assess its generalization performance.
 
-line 23: output directory
-
-line 34: directory of the example set [create an empty .csv file in the following directory]
-
-line 37: label file name
-
-line 44: input the time (ms) before fault and number of samples
-
-line 54: input of the start time, number of sample [did not apply any preprocessing]
-
-line 61: name of the output .csv file
-
-Step 2: DataFormating.py
-
-The purpose of this step is to format the data. Two types of data (cavity or fault) will be generated based on the input in line 28.
-
-line 28: cavity or fault 
-
-line 61: directory of the dataset
-
-line 66-67: start and end date of the dataset
-
-line 77-79: save the dataset, cavity, and fault information of the data
-
-Step 3: ModelBuilding.py
-
-The purpose of this step is to load cavity/fault signals, apply resampling, perform z-score normalization, split the data, train, and test the model. The saved model can then load, fine-tune and/or test anytime. 
-
-line 34: cavity or fault
-
-line 65: set directory
-
-line 73: name of the output folder
-
-line 75-76: data and label directory
-
-line 154-157: activate (layer freezing, if required)
+Finally, the trained model is deployed in the Jefferson Lab control room to perform real-time fault classification and identify faulty cavities, supporting operational stability and diagnostics.
